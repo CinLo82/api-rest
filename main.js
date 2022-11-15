@@ -1,6 +1,6 @@
 const API_URL_RANDOM = 'https://api.thecatapi.com/v1/images/search?limit=2&api_key=live_JFY6Ceg2XsbbIS3GXKgq4U70xHoHu3m9AawAmWIhfRrsaPVbIpca8QVnFX2xCQu2';
-const API_URL_FAVOTITES = 'https://api.thecatapi.com/v1/favourites?api_key=live_JFY6Ceg2XsbbIS3GXKgq4U70xHoHu3m9AawAmWIhfRrsaPVbIpca8QVnFX2xCQu2';
-const API_URL_FAVOTITES_DELETE = (id) => `https://api.thecatapi.com/v1/favourites/${id}?api_key=live_JFY6Ceg2XsbbIS3GXKgq4U70xHoHu3m9AawAmWIhfRrsaPVbIpca8QVnFX2xCQu2`;
+const API_URL_FAVOTITES = 'https://api.thecatapi.com/v1/favourites';
+const API_URL_FAVOTITES_DELETE = (id) => `https://api.thecatapi.com/v1/favourites/${id}`;
 
 const spanError = document.getElementById('error')
 
@@ -26,8 +26,14 @@ async function loadRandomMichis() {
   }
 }
 
+
 async function loadFavouriteMichis() {
-  const res = await fetch(API_URL_FAVOTITES);
+  const res = await fetch(API_URL_FAVOTITES, {
+    method: 'GET',
+    headers: {
+      'X-API-KEY': 'live_JFY6Ceg2XsbbIS3GXKgq4U70xHoHu3m9AawAmWIhfRrsaPVbIpca8QVnFX2xCQu2',
+    },
+  });
   const data = await res.json();
   console.log('Favoritos')
   console.log(data)
@@ -35,30 +41,37 @@ async function loadFavouriteMichis() {
   if (res.status !== 200) {
     spanError.innerHTML = "Hubo un error: " + res.status + data.message;
   } else {
+    const section = document.getElementById('favoriteMichis');
+    section.innerHTML = "";
+    const h2 = document.createElement('h2');
+    const h2Text = document.createTextNode('Michis favoritos');
+    h2.appendChild(h2Text);
+    section.appendChild(h2);
+
     data.forEach(michi => {
-        const section = document.getElementById('favoriteMichis');
+        
         const article = document.createElement('article');
         const img = document.createElement('img');
         const btn = document.createElement('button');
         const btnText = document.createTextNode('Sacar al michi de favoritos');
 
-        
         img.src = michi.image.url
         btn.appendChild(btnText);
         btn.onclick = () => deleteFavouriteMichi(michi.id);
         article.appendChild(img);
         article.appendChild(btn);
         section.appendChild(article);
-
     });
   }
 }
+
 
 async function saveFavouriteMichi(id) {
   const res = await fetch(API_URL_FAVOTITES, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'X-API-KEY': 'live_JFY6Ceg2XsbbIS3GXKgq4U70xHoHu3m9AawAmWIhfRrsaPVbIpca8QVnFX2xCQu2',
     },
     body: JSON.stringify({
       image_id: id
@@ -73,12 +86,16 @@ async function saveFavouriteMichi(id) {
     spanError.innerHTML = "Hubo un error: " + res.status + data.message;
   } else {
     console.log('Michi guardado en favoritos');
+    loadFavouriteMichis();
   }
 }
+
 
 async function deleteFavouriteMichi(id) {
     const res = await fetch(API_URL_FAVOTITES_DELETE(id), {
       method: 'DELETE',
+      headers: { 'X-API-KEY': 'live_JFY6Ceg2XsbbIS3GXKgq4U70xHoHu3m9AawAmWIhfRrsaPVbIpca8QVnFX2xCQu2',
+    },
     });
     const data = await res.json();
   
@@ -86,8 +103,10 @@ async function deleteFavouriteMichi(id) {
         spanError.innerHTML = "Hubo un error: " + res.status + data.message;
     } else {
         console.log('Michi eliminado de favoritos');
+        loadFavouriteMichis();
     }
-  }
+}
+
 
 loadRandomMichis();
 loadFavouriteMichis();

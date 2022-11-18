@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <link rel="stylesheet" href="./style.css">
     <title>Gatitos aleatorios</title>
 </head>
 <body>
-    <h1>Random Cats</h1>
 
-    <span id="Error"></span>
+    <h1>
+      🐾🐈‍⬛🐾Random Cats🐾🐈‍⬛🐾
+    </h1>
+    <span id="error"></span>
+    <h2>🐈‍⬛Michis Aleatorios🐈‍⬛</h2>
 
-    <section id="randomMichis">
-        <h2>Michis aleatorios</h2>
-
+    <section id="randomMichis" class="random">
         <article>
             <img id="img1" class="img" alt="Foto gatito aleatorio">
             <button id="btn1" class="button">Guardar michi en favoritos</button>
@@ -25,17 +27,37 @@
             <button id="btn2" class="button">Guardar michi en favoritos</button>
         </article>
 
-        <button class="button load" onclick="loadRandomMichis()">Reload</button>
+        <button class="button load" id="load" onclick="loadRandomMichis()">Reload🐈‍⬛</button>
     </section>
 
+    <div>🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾</div>
+
+    <section id="uploadingCat">
+      <h2>🐈‍⬛Sube la foto de tu michi🐈‍⬛</h2>
+        <form id="uploadingForm">
+        
+            <input type="file" id="file" name="file" />
+
+          <button id="btn-up" type="button" onclick="uploadMichiPhoto()">🐾Subir foto de michi🐾</button> 
+        </form>
+      </section>
+
+      <div>🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾</div>
+   
     <section id="favoriteMichis">
-        <h2>Michis favoritos</h2>
+  
         <article>
             <img id="img1" class="imgfav" alt="Foto gatito aleatorio">
-            <button class="button">Sacar al michi de favoritos</button>
+            <button id="btnFav" class="button ">Subir foto de mi michi</button>    
+            
         </article>
     </section>
+
+    <footer>🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾🐈‍⬛🐾</footer>
+
     
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./main.js"></script>
+
 </body>
 </html>
